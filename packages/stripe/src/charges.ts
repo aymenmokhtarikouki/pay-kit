@@ -28,6 +28,12 @@ export interface InstantChargeParams {
   /** Confirm immediately with the saved card (no client action). */
   offSession?: boolean
   metadata?: Record<string, string>
+  /**
+   * Extra PaymentIntent params spread verbatim (payment_method_types for
+   * Terminal card_present, automatic_payment_methods, …). Computed fields
+   * (amount/fee/transfer_data) always win.
+   */
+  paymentIntentExtras?: Record<string, unknown>
 }
 
 export interface InstantChargeResult {
@@ -43,6 +49,7 @@ export async function createInstantCharge(
   const breakdown = computeFees(params.charge, params.policy, params.merchant)
 
   const piParams: Record<string, unknown> = {
+    ...params.paymentIntentExtras,
     amount: breakdown.totalCents,
     currency: breakdown.currency,
     metadata: params.metadata,
