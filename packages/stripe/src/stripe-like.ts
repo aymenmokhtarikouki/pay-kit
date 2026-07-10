@@ -13,21 +13,21 @@ export interface PaymentIntentLike {
 
 export interface StripeLike {
   paymentIntents: {
-    create(params: Record<string, unknown>): Promise<PaymentIntentLike>
+    create(params: any): Promise<PaymentIntentLike>
     capture(id: string, params?: Record<string, unknown>): Promise<PaymentIntentLike>
     cancel(id: string): Promise<PaymentIntentLike>
   }
   refunds: {
-    create(params: Record<string, unknown>): Promise<{ id: string }>
+    create(params: any): Promise<{ id: string }>
   }
   transfers: {
-    create(params: Record<string, unknown>): Promise<{ id: string }>
+    create(params: any): Promise<{ id: string }>
   }
   customers: {
-    create(params: Record<string, unknown>): Promise<{ id: string }>
+    create(params: any): Promise<{ id: string }>
   }
   setupIntents: {
-    create(params: Record<string, unknown>): Promise<{ id: string; client_secret?: string | null }>
+    create(params: any): Promise<{ id: string; client_secret?: string | null }>
   }
   webhooks: {
     constructEvent(payload: string | Buffer, signature: string, secret: string): StripeEventLike
