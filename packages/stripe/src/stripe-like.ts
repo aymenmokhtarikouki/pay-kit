@@ -14,7 +14,7 @@ export interface PaymentIntentLike {
 export interface StripeLike {
   paymentIntents: {
     create(params: any): Promise<PaymentIntentLike>
-    capture(id: string, params?: Record<string, unknown>): Promise<PaymentIntentLike>
+    capture(id: string, params?: any): Promise<PaymentIntentLike>
     cancel(id: string): Promise<PaymentIntentLike>
   }
   refunds: {
