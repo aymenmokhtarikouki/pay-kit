@@ -1,6 +1,6 @@
 {
   "name": "@paykit/express",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Express 4/5 webhook route handler for @paykit/stripe — raw-body + stripe-signature handling (the part that's easy to get wrong), envelope-agnostic.",
   "license": "UNLICENSED",
   "main": "dist/index.js",
@@ -13,6 +13,14 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@paykit/stripe": "0.1.0"
+    "@paykit/stripe": "1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aymenmokhtarikouki/pay-kit.git",
+    "directory": "packages/express"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@paykit/core",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Pure money math: Charge = typed components (base/delivery/tip/…), FeePolicy with per-component commission and per-merchant overrides, escrow release math (commission + accrued-fee recoup), subscription tier pricing. No Stripe, no I/O — fully unit-testable.",
   "license": "UNLICENSED",
   "main": "dist/index.js",
@@ -11,5 +11,13 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aymenmokhtarikouki/pay-kit.git",
+    "directory": "packages/core"
   }
 }
