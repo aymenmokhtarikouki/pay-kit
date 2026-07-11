@@ -1,5 +1,5 @@
 /**
- * Escrow math — the yuma money flow, extracted as pure functions:
+ * Escrow math — a production marketplace money flow, extracted as pure functions:
  * authorize (hold) → capture at accept → hold through the dispute window →
  * release = (captured − refunded) − commission − recouped accrued fees.
  * The app persists EscrowState (its Payment row) and performs the Stripe
@@ -38,7 +38,7 @@ export function assertRefund(state: EscrowState, amountCents: number): void {
 }
 
 /**
- * The release arithmetic (matches yuma's production releaseOrderPayment):
+ * The release arithmetic (matches the production release flow it was extracted from):
  *   net        = captured − refunded
  *   commission = round(net × feePercent / 100)
  *   recouped   = min(accruedFee, net − commission)   // net-from-payouts

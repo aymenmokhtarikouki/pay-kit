@@ -1,13 +1,13 @@
 # pay-kit
 
-Shared payments toolkit for yuma, lineo and future apps. One idea powers it:
+Shared marketplace payments toolkit. One idea powers it:
 **a charge is a list of typed components, and commission is decided per
 component** — so a tip can carry 0% while the base pays 10%, per app, per
 merchant, without code changes. Both production money flows are first-class:
 
-- **instant** (lineo): destination charge → merchant's Connect account minus
+- **instant**: destination charge → merchant's Connect account minus
   the application fee, immediately.
-- **escrow** (yuma): manual-capture hold on the platform → capture at accept →
+- **escrow**: manual-capture hold on the platform → capture at accept →
   hold through the dispute window → release = net − commission − recouped
   merchant fees.
 
@@ -26,8 +26,8 @@ rows), orchestration (WHEN to capture/release) and keys.
 ## The tipping answer, in code
 
 ```ts
-const policy = { defaultPercent: 10, perComponent: { tip: 0 } }  // yuma
-// const policy = { defaultPercent: 7 }                          // lineo (tips taxed 7% — business choice)
+const policy = { defaultPercent: 10, perComponent: { tip: 0 } }  // escrow marketplace
+// const policy = { defaultPercent: 7 }                          // flat — tips taxed too (business choice)
 
 await createInstantCharge(stripe, {
   charge: { currency: 'eur', components: [
@@ -44,7 +44,7 @@ await createInstantCharge(stripe, {
 await createTip(stripe, { amountCents: 500, currency: 'eur', customerId, merchant })
 ```
 
-## The escrow flow (yuma)
+## The escrow flow
 
 ```ts
 const { paymentIntent } = await createEscrowAuthorization(stripe, { charge, customerId })
@@ -62,11 +62,11 @@ const { breakdown, transferId } = await releaseEscrow(stripe, {
 
 ## Subscriptions — two kinds, both supported
 
-- **Merchant → platform** (SaaS): `stripe-billing` mode (lineo Premium —
+- **Merchant → platform** (SaaS): `stripe-billing` mode (
   `tierPriceCents(quantity, pricing)` prices the Stripe subscription) or
-  `accrual` mode (yuma cook PRO — `accrueFee` monthly, `recoupFromOwed`
+  `accrual` mode (`accrueFee` monthly, `recoupFromOwed`
   inside `releaseEscrow`; the merchant's card is never charged).
-- **Customer → merchant** (recurring, e.g. yuma weekly bundles — currently
+- **Customer → merchant** (recurring, e.g. weekly meal plans — often
   unbilled!): the app schedules each period and charges it as a normal
   `Charge` through either flow. No special math required; see INTEGRATION.md.
 
@@ -88,8 +88,8 @@ app.post('/payments/webhook', express.raw({ type: 'application/json' }),
 ## Docs
 
 [`contracts/API.md`](contracts/API.md) · [`docs/INTEGRATION.md`](docs/INTEGRATION.md)
-(yuma/lineo adoption recipes — including the two production gaps this kit
-closes: yuma tips that actually charge, and weekly-bundle billing).
+(adoption recipes — including the production gaps this kit
+closes for typical marketplaces: tips that actually charge, and recurring-plan billing).
 
 ## Development
 

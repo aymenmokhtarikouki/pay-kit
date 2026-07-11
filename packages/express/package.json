@@ -2,11 +2,12 @@
   "name": "@paykit/express",
   "version": "1.0.0",
   "description": "Express 4/5 webhook route handler for @paykit/stripe — raw-body + stripe-signature handling (the part that's easy to get wrong), envelope-agnostic.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -22,5 +23,23 @@
     "type": "git",
     "url": "git+https://github.com/aymenmokhtarikouki/pay-kit.git",
     "directory": "packages/express"
-  }
+  },
+  "keywords": [
+    "payments",
+    "stripe",
+    "marketplace",
+    "commission",
+    "escrow",
+    "connect",
+    "express"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "homepage": "https://github.com/aymenmokhtarikouki/pay-kit#readme",
+  "bugs": {
+    "url": "https://github.com/aymenmokhtarikouki/pay-kit/issues"
+  },
+  "author": "Aymen Mokhtari"
 }

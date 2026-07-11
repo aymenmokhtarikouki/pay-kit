@@ -86,7 +86,7 @@ describe('instant charges (destination + application fee)', () => {
     expect((p.metadata as Record<string, string>).type).toBe('tip')
   })
 
-  it('a lineo-style 7% tip policy still works (business decision, not code)', async () => {
+  it('a flat 7% tip policy still works (business decision, not code)', async () => {
     const { stripe, calls } = fakeStripe()
     await createTip(stripe, {
       amountCents: 500,

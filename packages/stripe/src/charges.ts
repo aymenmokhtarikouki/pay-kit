@@ -2,10 +2,10 @@
  * The two money flows, as Stripe operations. Fee math always comes from
  * @paykit/core's computeFees — one arithmetic, two flows.
  *
- * INSTANT (lineo model): destination charge — the PaymentIntent routes funds
+ * INSTANT: destination charge — the PaymentIntent routes funds
  * to the merchant's connected account minus `application_fee_amount`.
  *
- * ESCROW (yuma model): manual-capture PaymentIntent on the PLATFORM account
+ * ESCROW: manual-capture PaymentIntent on the PLATFORM account
  * (no destination) → capture at accept → hold through the dispute window →
  * `releaseEscrow` transfers net-minus-commission-minus-accrued-fees.
  */

@@ -22,8 +22,8 @@ export interface Charge {
 /**
  * Platform commission rules. Resolution order per component:
  *   perComponent[type]  >  merchant.feePercentOverride  >  defaultPercent
- * Examples: lineo { defaultPercent: 7 }; yuma { defaultPercent: 10,
- * perComponent: { tip: 0 } } with PRO cooks passing feePercentOverride: 8.
+ * Examples: { defaultPercent: 7 } flat, or { defaultPercent: 10,
+ * perComponent: { tip: 0 } } with premium merchants passing feePercentOverride: 8.
  */
 export interface FeePolicy {
   defaultPercent: number
@@ -56,7 +56,7 @@ export interface FeeBreakdown {
 
 // ── Escrow (capture → hold → release) ────────────────────────────────────────
 
-/** Mirrors the app's Payment row (yuma model). All cents. */
+/** Mirrors a typical app Payment row. All cents. */
 export interface EscrowState {
   authorizedCents: number
   capturedCents: number
@@ -89,7 +89,7 @@ export interface ReleaseBreakdown {
 // ── Subscriptions ────────────────────────────────────────────────────────────
 
 /**
- * Quantity-tiered SaaS pricing (lineo Premium): tiers[i] = total cents for
+ * Quantity-tiered SaaS pricing: tiers[i] = total cents for
  * quantity i+1; beyond the table each extra unit costs extraPerUnitCents.
  */
 export interface TierPricing {

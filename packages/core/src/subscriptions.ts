@@ -2,9 +2,9 @@
  * Subscription money helpers. Two REAL production models, both supported:
  *
  * MerchantSubscription (business → platform SaaS):
- *  - 'stripe-billing' mode (lineo Premium): one Stripe subscription, quantity
+ *  - 'stripe-billing' mode: one Stripe subscription, quantity
  *    = premium units, TIERED total pricing → tierPriceCents().
- *  - 'accrual' mode (yuma cook PRO): the fee accrues app-side (owedFeeCents)
+ *  - 'accrual' mode: the fee accrues app-side (owedFeeCents)
  *    and is recouped from payouts → recoupFromOwed() (also used by escrow).
  *
  * CustomerSubscription (customer → merchant recurring, e.g. weekly bundles):
@@ -16,7 +16,7 @@ import { PayKitError } from './types'
 
 /**
  * Total price for a quantity under tiered pricing.
- * lineo defaults: { tiers: [2000, 3600, 5200, 6400], extraPerUnitCents: 1200 }
+ * Example: { tiers: [2000, 3600, 5200, 6400], extraPerUnitCents: 1200 }
  * → qty 1 = €20, 2 = €36, 3 = €52, 4 = €64, 5 = €76, 6 = €88 …
  */
 export function tierPriceCents(quantity: number, pricing: TierPricing): number {

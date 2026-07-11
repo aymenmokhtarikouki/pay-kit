@@ -11,8 +11,8 @@ import {
   type Charge,
 } from '../src/index'
 
-const YUMA_POLICY = { defaultPercent: 10, perComponent: { tip: 0 } }
-const LINEO_POLICY = { defaultPercent: 7 }
+const ESCROW_POLICY = { defaultPercent: 10, perComponent: { tip: 0 } }
+const FLAT_POLICY = { defaultPercent: 7 }
 
 describe('computeFees — per-component commission', () => {
   const charge: Charge = {
@@ -25,7 +25,7 @@ describe('computeFees — per-component commission', () => {
   }
 
   it('tips carry their own rate (0%) while base/delivery pay commission', () => {
-    const fees = computeFees(charge, YUMA_POLICY)
+    const fees = computeFees(charge, ESCROW_POLICY)
     expect(fees.totalCents).toBe(3300)
     expect(fees.components).toEqual([
       { type: 'base', amountCents: 2500, feePercent: 10, feeCents: 250 },
@@ -38,13 +38,13 @@ describe('computeFees — per-component commission', () => {
   })
 
   it('merchant override (PRO 8%) applies but perComponent still wins', () => {
-    const fees = computeFees(charge, YUMA_POLICY, { feePercentOverride: 8 })
+    const fees = computeFees(charge, ESCROW_POLICY, { feePercentOverride: 8 })
     expect(fees.components[0]!.feeCents).toBe(200) // 8% of 2500
     expect(fees.components[2]!.feeCents).toBe(0) // tip stays 0
   })
 
-  it('lineo flat policy taxes everything at 7% (their current tip behavior)', () => {
-    const fees = computeFees(charge, LINEO_POLICY)
+  it('a flat policy taxes every component at its default percent, tips included', () => {
+    const fees = computeFees(charge, FLAT_POLICY)
     expect(fees.applicationFeeCents).toBe(175 + 21 + 35)
   })
 
@@ -57,15 +57,15 @@ describe('computeFees — per-component commission', () => {
   })
 
   it('rejects invalid charges', () => {
-    expect(() => computeFees({ currency: '', components: [{ type: 'base', amountCents: 1 }] }, LINEO_POLICY)).toThrow(PayKitError)
-    expect(() => computeFees({ currency: 'eur', components: [] }, LINEO_POLICY)).toThrow(PayKitError)
+    expect(() => computeFees({ currency: '', components: [{ type: 'base', amountCents: 1 }] }, FLAT_POLICY)).toThrow(PayKitError)
+    expect(() => computeFees({ currency: 'eur', components: [] }, FLAT_POLICY)).toThrow(PayKitError)
     expect(() =>
-      computeFees({ currency: 'eur', components: [{ type: 'base', amountCents: 10.5 }] }, LINEO_POLICY),
+      computeFees({ currency: 'eur', components: [{ type: 'base', amountCents: 10.5 }] }, FLAT_POLICY),
     ).toThrow(PayKitError)
   })
 })
 
-describe('escrow math (yuma release model)', () => {
+describe('escrow math (release model)', () => {
   const state = { authorizedCents: 5000, capturedCents: 4000, refundedCents: 500, releasedCents: 0 }
 
   it('release = net − commission − recouped accrual', () => {
@@ -101,7 +101,7 @@ describe('escrow math (yuma release model)', () => {
   })
 })
 
-describe('subscription pricing (lineo tiers) + accrual (yuma)', () => {
+describe('subscription pricing (tiers) + fee accrual', () => {
   const PRICING = { tiers: [2000, 3600, 5200, 6400], extraPerUnitCents: 1200 }
 
   it('tier table then linear extras', () => {

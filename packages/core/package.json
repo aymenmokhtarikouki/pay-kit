@@ -2,11 +2,12 @@
   "name": "@paykit/core",
   "version": "1.0.0",
   "description": "Pure money math: Charge = typed components (base/delivery/tip/…), FeePolicy with per-component commission and per-merchant overrides, escrow release math (commission + accrued-fee recoup), subscription tier pricing. No Stripe, no I/O — fully unit-testable.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -19,5 +20,23 @@
     "type": "git",
     "url": "git+https://github.com/aymenmokhtarikouki/pay-kit.git",
     "directory": "packages/core"
-  }
+  },
+  "keywords": [
+    "payments",
+    "stripe",
+    "marketplace",
+    "commission",
+    "escrow",
+    "connect",
+    "core"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "homepage": "https://github.com/aymenmokhtarikouki/pay-kit#readme",
+  "bugs": {
+    "url": "https://github.com/aymenmokhtarikouki/pay-kit/issues"
+  },
+  "author": "Aymen Mokhtari"
 }

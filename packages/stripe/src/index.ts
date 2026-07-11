@@ -1,7 +1,7 @@
 /**
  * @paykit/stripe — Stripe adapter for the pay-kit money flows.
  *
- *   // lineo-style instant charge with a tip at 0% commission:
+ *   // instant charge with a tip at 0% commission:
  *   await createInstantCharge(stripe, {
  *     charge: { currency: 'eur', components: [
  *       { type: 'base', amountCents: 4500 }, { type: 'tip', amountCents: 500 },
@@ -11,7 +11,7 @@
  *     customerId, offSession: true,
  *   })
  *
- *   // yuma-style escrow: authorize → capture → (window) → release
+ *   // escrow: authorize → capture → (window) → release
  *   await createEscrowAuthorization(stripe, { charge, customerId })
  *   await captureEscrow(stripe, state, piId, acceptedTotal)
  *   await releaseEscrow(stripe, { state, release: { feePercent: 10, accruedFeeCents }, currency, destinationAccountId })

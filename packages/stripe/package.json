@@ -2,11 +2,12 @@
   "name": "@paykit/stripe",
   "version": "1.0.0",
   "description": "Stripe adapter for @paykit/core — instant destination charges with per-component application fees, escrow (manual-capture → capture → release transfer), tips, refunds, setup intents, tiered Billing subscriptions and a typed webhook dispatcher. Structural typing: takes YOUR configured stripe client (any v10+).",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -22,5 +23,23 @@
     "type": "git",
     "url": "git+https://github.com/aymenmokhtarikouki/pay-kit.git",
     "directory": "packages/stripe"
-  }
+  },
+  "keywords": [
+    "payments",
+    "stripe",
+    "marketplace",
+    "commission",
+    "escrow",
+    "connect",
+    "stripe"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "homepage": "https://github.com/aymenmokhtarikouki/pay-kit#readme",
+  "bugs": {
+    "url": "https://github.com/aymenmokhtarikouki/pay-kit/issues"
+  },
+  "author": "Aymen Mokhtari"
 }

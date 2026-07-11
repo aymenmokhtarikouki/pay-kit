@@ -1,73 +1,46 @@
-# Integration guide
+# Integrating pay-kit
 
-`git submodule add git@github.com:aymenmokhtarikouki/pay-kit.git vendor/pay-kit`
-→ `npm --prefix vendor/pay-kit run setup` → `file:` deps for `@paykit/core` +
-`@paykit/stripe` (+ `@paykit/express`). Deploys: init submodule + setup BEFORE
-the consumer `npm install` (same as every kit).
+## Install
 
-The kit takes YOUR `new Stripe(key)` instance everywhere — it never owns keys.
-
-## yuma_backend adoption (the two production gaps first)
-
-**1. Tips that actually charge** (today `Order.tipCents` is a DB field, no
-money moves). In `addTipToOrder`:
-
-```ts
-import { createTip } from '@paykit/stripe'
-const { paymentIntent, breakdown } = await createTip(getStripe(), {
-  amountCents: dto.tipCents,
-  currency: 'eur',
-  customerId: await getOrCreateStripeCustomer(userId),
-  merchant: { accountId: cook.stripeAccountId },   // policy default: tip = 0% commission
-  metadata: { orderId },
-})
-// persist paymentIntent.id + breakdown next to tipCents
+```bash
+npm install @paykit/core                # pure money math + policies
+npm install @paykit/stripe stripe       # gateway (bring your own stripe client)
+npm install @paykit/express             # optional webhook route factory
 ```
 
-**2. Weekly-bundle billing** (today generated orders bypass payments
-entirely). In order-generation, per generated week:
+## Model your money
 
-```ts
-const { paymentIntent } = await createEscrowAuthorization(getStripe(), {
-  charge: { currency: 'eur', components: [{ type: 'base', amountCents: weeklyPriceCents }] },
-  customerId, paymentMethodId: savedCard, offSession: true,
-  metadata: { subscriptionId, weekStartDate },
-})
-```
-then the normal capture-at-accept / release flow applies per order.
+- Every charge is **typed components** (`base`, `delivery`, `tip`, your own).
+- `FeePolicy` resolves commission per component with per-merchant overrides:
+  `perComponent[type] > merchant.feePercentOverride > defaultPercent`.
+  Tips at 0% is one config line, not a code path.
+- Pick a flow per charge: `instant` (destination charge, funds route to the
+  merchant immediately) or `escrow` (manual-capture on the platform,
+  `releaseEscrow` later transfers net of commission and any accrued fees).
 
-**3. Existing escrow path** — `payments.service.ts` keeps its orchestration
-but delegates the arithmetic + Stripe params:
-- `releaseOrderPayment` → `releaseEscrow(stripe, { state: paymentRow, release: { feePercent: await getCookCommissionPercent(cookId), accruedFeeCents: sub.owedFeeCents }, ... })` — the returned `ReleaseBreakdown` maps 1:1 onto `commissionCents`/`releasedCents` + `CookSubscription.owedFeeCents`.
-- capture/refund guards replace the hand-rolled checks (`assertCapture`/`assertRefund`).
-- webhook: replace the switch with `createWebhookDispatcher` + `createStripeWebhookHandler`.
+## Webhooks
 
-Policy: `{ defaultPercent: commissionPercent (10), perComponent: { tip: 0 } }`,
-merchant `feePercentOverride` = PRO 8 via existing entitlements.
+Mount the webhook route BEFORE any JSON body parser — signature verification
+needs the raw body. `@paykit/express` handles that footgun for you.
 
-## lineo-backend adoption
+## What stays in your app
 
-- `connect.service.calculateApplicationFee` + `payments.service.createPaymentIntent`
-  → `createInstantCharge` with `policy: { defaultPercent: getConfigNum('commission_percent') }`.
-- `processTip` → `createTip(..., { policy: { perComponent: { tip: 7 } } })` to
-  keep today's 7%-on-tips behavior — or drop the override for 0% pass-through
-  (a business decision; the kit makes it a config line either way).
-- Premium subscription: keep Stripe Billing wiring; price quantities with
-  `tierPriceCents(qty, { tiers: [tier_1..tier_4], extraPerUnitCents: extra_salon })`
-  from platform_config.
-- The `usd`-vs-`eur` no-show inconsistency disappears by construction —
-  every Charge names its currency.
+WHEN to authorize/capture/release is order-lifecycle logic — yours. The kit
+owns HOW: the math is pure and unit-tested, so your orchestration code stops
+carrying arithmetic.
 
-## Customer subscriptions (yuma bundles pattern)
+## Migrating from an existing implementation
 
-Store the schedule app-side (`SubscriptionWeek` already exists); each period
-= one `Charge` through `createEscrowAuthorization` (or `createInstantCharge`
-for instant apps) with `metadata.subscriptionId`. Pause/resume/cancel stay
-app logic — the kit only prices and moves money.
+The kits were extracted from production systems, and these rules kept those
+migrations safe:
 
-## Live verification at adoption
-
-Run against Stripe **test mode** with the app's test keys: one instant charge
-with a tip component, one escrow authorize→capture→release cycle, one webhook
-delivery via `stripe listen`. The kit's unit tests already pin the params and
-math; test mode confirms the account wiring (Connect accounts, capabilities).
+1. **Never rewrite a working flow in one step.** Keep your endpoint URLs,
+   response envelopes and (for realtime) socket event names byte-identical;
+   swap the implementation underneath, one endpoint at a time.
+2. **Data stays put.** The store seams map onto your existing tables — new
+   capabilities need at most additive columns, never a data migration.
+3. **Delete the superseded code in the same change.** Two implementations of
+   the same behavior is how drift starts.
+4. Where the kit enforces domain rules through policy hooks, your hooks may
+   THROW your app's own error types — the kit re-throws them untouched, so
+   your API's error contract survives the swap.

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Shared payments toolkit — charges as typed components with per-component commission (tips can be 0%), instant (destination-charge) and escrow (capture→hold→release) money flows, merchant/customer subscriptions, Stripe adapter and webhook routing. Pure money math, storage- and client-agnostic.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "workspaces": [
     "packages/*"
   ],
