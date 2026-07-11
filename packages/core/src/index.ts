@@ -1,5 +1,5 @@
 /**
- * @paykit/core — pure money math for marketplace payments.
+ * @aymenkits/pay-core — pure money math for marketplace payments.
  *
  * The tipping answer, in code:
  *   const policy = { defaultPercent: 10, perComponent: { tip: 0 } }

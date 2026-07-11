@@ -8,8 +8,8 @@
     "packages/*"
   ],
   "scripts": {
-    "setup": "npm install --include-workspace-root -w @paykit/core -w @paykit/stripe -w @paykit/express && npm run build",
-    "build": "npm run build -w @paykit/core -w @paykit/stripe -w @paykit/express",
+    "setup": "npm install --include-workspace-root -w @aymenkits/pay-core -w @aymenkits/pay-stripe -w @aymenkits/pay-express && npm run build",
+    "build": "npm run build -w @aymenkits/pay-core -w @aymenkits/pay-stripe -w @aymenkits/pay-express",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "vitest run"
   },

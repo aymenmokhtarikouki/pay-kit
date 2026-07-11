@@ -1,6 +1,6 @@
 /**
  * The two money flows, as Stripe operations. Fee math always comes from
- * @paykit/core's computeFees — one arithmetic, two flows.
+ * @aymenkits/pay-core's computeFees — one arithmetic, two flows.
  *
  * INSTANT: destination charge — the PaymentIntent routes funds
  * to the merchant's connected account minus `application_fee_amount`.
@@ -9,8 +9,8 @@
  * (no destination) → capture at accept → hold through the dispute window →
  * `releaseEscrow` transfers net-minus-commission-minus-accrued-fees.
  */
-import type { Charge, EscrowState, FeeBreakdown, FeePolicy, MerchantFeeContext, ReleaseBreakdown, ReleaseInput } from '@paykit/core'
-import { computeFees, computeRelease, assertCapture, assertRefund, singleComponentCharge } from '@paykit/core'
+import type { Charge, EscrowState, FeeBreakdown, FeePolicy, MerchantFeeContext, ReleaseBreakdown, ReleaseInput } from '@aymenkits/pay-core'
+import { computeFees, computeRelease, assertCapture, assertRefund, singleComponentCharge } from '@aymenkits/pay-core'
 import type { PaymentIntentLike, StripeLike } from './stripe-like'
 
 export interface MerchantAccount extends MerchantFeeContext {

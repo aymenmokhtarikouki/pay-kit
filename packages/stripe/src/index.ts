@@ -1,5 +1,5 @@
 /**
- * @paykit/stripe — Stripe adapter for the pay-kit money flows.
+ * @aymenkits/pay-stripe — Stripe adapter for the pay-kit money flows.
  *
  *   // instant charge with a tip at 0% commission:
  *   await createInstantCharge(stripe, {

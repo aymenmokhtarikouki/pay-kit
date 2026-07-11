@@ -19,9 +19,9 @@ rows), orchestration (WHEN to capture/release) and keys.
 
 | Package | What | Deps |
 | --- | --- | --- |
-| `@paykit/core` | Pure math, no I/O: `computeFees` (per-component commission, per-merchant overrides, explicit currency), escrow guards + `computeRelease` (commission + accrued-fee recoup, carry-forward), `tierPriceCents` (quantity-tiered SaaS pricing), `accrueFee`/`recoupFromOwed` (net-from-payouts model). | — |
-| `@paykit/stripe` | The flows as Stripe calls, structurally typed over YOUR stripe client (v10+, no SDK pin): `createInstantCharge`, `createTip`, `createEscrowAuthorization`/`captureEscrow`/`voidEscrow`/`refundEscrow`/`releaseEscrow`, customers + setup intents, `createWebhookDispatcher` (verify + typed routing). | core |
-| `@paykit/express` | The webhook endpoint done right (raw-body enforcement — fails loudly if `express.raw()` is missing). | stripe |
+| `@aymenkits/pay-core` | Pure math, no I/O: `computeFees` (per-component commission, per-merchant overrides, explicit currency), escrow guards + `computeRelease` (commission + accrued-fee recoup, carry-forward), `tierPriceCents` (quantity-tiered SaaS pricing), `accrueFee`/`recoupFromOwed` (net-from-payouts model). | — |
+| `@aymenkits/pay-stripe` | The flows as Stripe calls, structurally typed over YOUR stripe client (v10+, no SDK pin): `createInstantCharge`, `createTip`, `createEscrowAuthorization`/`captureEscrow`/`voidEscrow`/`refundEscrow`/`releaseEscrow`, customers + setup intents, `createWebhookDispatcher` (verify + typed routing). | core |
+| `@aymenkits/pay-express` | The webhook endpoint done right (raw-body enforcement — fails loudly if `express.raw()` is missing). | stripe |
 
 ## The tipping answer, in code
 

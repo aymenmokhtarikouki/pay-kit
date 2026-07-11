@@ -1,7 +1,7 @@
 {
-  "name": "@paykit/express",
+  "name": "@aymenkits/pay-express",
   "version": "1.0.0",
-  "description": "Express 4/5 webhook route handler for @paykit/stripe — raw-body + stripe-signature handling (the part that's easy to get wrong), envelope-agnostic.",
+  "description": "Express 4/5 webhook route handler for @aymenkits/pay-stripe — raw-body + stripe-signature handling (the part that's easy to get wrong), envelope-agnostic.",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@paykit/stripe": "1.0.0"
+    "@aymenkits/pay-stripe": "1.0.0"
   },
   "publishConfig": {
     "access": "public"

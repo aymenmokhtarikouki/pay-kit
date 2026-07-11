@@ -1,11 +1,11 @@
-# @paykit/core
+# @aymenkits/pay-core
 
 Marketplace money math, no Stripe import: a Charge is typed components (base/delivery/tip/…), FeePolicy resolves commission per component type with per-merchant overrides, instant vs escrow flow strategies, and computeRelease nets accrued platform fees out of payouts.
 
 ## Install
 
 ```bash
-npm install @paykit/core
+npm install @aymenkits/pay-core
 ```
 
 Installs with it: nothing else — zero dependencies (pure, fully unit-testable).
@@ -22,7 +22,7 @@ app implements on its own stack.
 ## Quick example
 
 ```ts
-import { computeFees, computeRelease } from '@paykit/core'
+import { computeFees, computeRelease } from '@aymenkits/pay-core'
 
 const fees = computeFees(charge, merchant, policy)
 // → { total, applicationFee, merchantNet, feeByComponent }
@@ -30,7 +30,7 @@ const fees = computeFees(charge, merchant, policy)
 
 ## Pairs with
 
-- `@paykit/stripe` executes what this computes
+- `@aymenkits/pay-stripe` executes what this computes
 
 Kits pair **by shape, never by import** — pass the sibling kit, your own
 service, or a stub in tests.

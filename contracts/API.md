@@ -62,7 +62,7 @@ Fee resolution order per component: `policy.perComponent[type]` →
 `CAPTURE_EXCEEDS_AUTHORIZED`/`REFUND_EXCEEDS_CAPTURED`/`NOTHING_TO_RELEASE`/
 `ALREADY_RELEASED` (409).
 
-## Webhook endpoint (via @paykit/express)
+## Webhook endpoint (via @aymenkits/pay-express)
 
 `POST /payments/webhook` — mounted with `express.raw({ type: 'application/json' })`.
 Responses: `200 { received: true }` · `400` bad signature/handler error ·

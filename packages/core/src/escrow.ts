@@ -3,7 +3,7 @@
  * authorize (hold) → capture at accept → hold through the dispute window →
  * release = (captured − refunded) − commission − recouped accrued fees.
  * The app persists EscrowState (its Payment row) and performs the Stripe
- * calls (via @paykit/stripe); these functions are the arithmetic contract.
+ * calls (via @aymenkits/pay-stripe); these functions are the arithmetic contract.
  */
 import type { EscrowState, ReleaseBreakdown, ReleaseInput } from './types'
 import { PayKitError } from './types'

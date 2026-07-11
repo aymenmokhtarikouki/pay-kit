@@ -1,14 +1,14 @@
-# @paykit/express
+# @aymenkits/pay-express
 
 Stripe webhook route factory with the raw-body handling everyone gets wrong, plus optional endpoint factories (setup-intent, payment methods).
 
 ## Install
 
 ```bash
-npm install @paykit/express
+npm install @aymenkits/pay-express
 ```
 
-Installs with it: `@paykit/stripe` (automatic dependency; `@paykit/core` transitively).
+Installs with it: `@aymenkits/pay-stripe` (automatic dependency; `@aymenkits/pay-core` transitively).
 
 ## You provide
 
@@ -22,14 +22,14 @@ app implements on its own stack.
 ## Quick example
 
 ```ts
-import { createWebhookRoute } from '@paykit/express'
+import { createWebhookRoute } from '@aymenkits/pay-express'
 
 app.post('/stripe/webhook', createWebhookRoute({ gateway, secret, onEvent }))
 ```
 
 ## Pairs with
 
-- `@paykit/stripe` gateway + event router
+- `@aymenkits/pay-stripe` gateway + event router
 
 Kits pair **by shape, never by import** — pass the sibling kit, your own
 service, or a stub in tests.

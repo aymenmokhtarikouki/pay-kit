@@ -1,14 +1,14 @@
-# @paykit/stripe
+# @aymenkits/pay-stripe
 
 The only package that talks to Stripe — via a client YOU construct and pass in (structural typing, no stripe dependency of its own): PaymentIntents (manual/auto/off-session), destination charges, transfers, refunds, SetupIntents + ephemeral keys, Billing, Terminal tokens, and a webhook verifier + typed event router.
 
 ## Install
 
 ```bash
-npm install @paykit/stripe
+npm install @aymenkits/pay-stripe
 ```
 
-Installs with it: `@paykit/core` (automatic dependency).
+Installs with it: `@aymenkits/pay-core` (automatic dependency).
 
 ## You provide
 
@@ -23,7 +23,7 @@ app implements on its own stack.
 
 ```ts
 import Stripe from 'stripe'
-import { createStripeGateway } from '@paykit/stripe'
+import { createStripeGateway } from '@aymenkits/pay-stripe'
 
 const gateway = createStripeGateway({ stripe: new Stripe(process.env.STRIPE_KEY) })
 await gateway.createInstantCharge({ charge, merchant, policy, customer })
@@ -31,7 +31,7 @@ await gateway.createInstantCharge({ charge, merchant, policy, customer })
 
 ## Pairs with
 
-- `@paykit/express` for the webhook route
+- `@aymenkits/pay-express` for the webhook route
 
 Kits pair **by shape, never by import** — pass the sibling kit, your own
 service, or a stub in tests.

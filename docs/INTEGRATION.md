@@ -3,9 +3,9 @@
 ## Install
 
 ```bash
-npm install @paykit/core                # pure money math + policies
-npm install @paykit/stripe stripe       # gateway (bring your own stripe client)
-npm install @paykit/express             # optional webhook route factory
+npm install @aymenkits/pay-core                # pure money math + policies
+npm install @aymenkits/pay-stripe stripe       # gateway (bring your own stripe client)
+npm install @aymenkits/pay-express             # optional webhook route factory
 ```
 
 ## Model your money
@@ -21,7 +21,7 @@ npm install @paykit/express             # optional webhook route factory
 ## Webhooks
 
 Mount the webhook route BEFORE any JSON body parser — signature verification
-needs the raw body. `@paykit/express` handles that footgun for you.
+needs the raw body. `@aymenkits/pay-express` handles that footgun for you.
 
 ## What stays in your app
 

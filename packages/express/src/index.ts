@@ -1,5 +1,5 @@
 /**
- * @paykit/express — the Stripe webhook endpoint, done right.
+ * @aymenkits/pay-express — the Stripe webhook endpoint, done right.
  *
  * MUST be mounted with a RAW body (signature verification needs the exact
  * bytes) BEFORE any json body-parser touches the route:
@@ -8,7 +8,7 @@
  *     express.raw({ type: 'application/json' }),
  *     createStripeWebhookHandler(dispatcher))
  */
-import type { WebhookDispatcher } from '@paykit/stripe'
+import type { WebhookDispatcher } from '@aymenkits/pay-stripe'
 
 export interface MinimalRequest {
   headers: Record<string, unknown>

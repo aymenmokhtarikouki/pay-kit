@@ -1,7 +1,7 @@
 {
-  "name": "@paykit/stripe",
+  "name": "@aymenkits/pay-stripe",
   "version": "1.0.0",
-  "description": "Stripe adapter for @paykit/core — instant destination charges with per-component application fees, escrow (manual-capture → capture → release transfer), tips, refunds, setup intents, tiered Billing subscriptions and a typed webhook dispatcher. Structural typing: takes YOUR configured stripe client (any v10+).",
+  "description": "Stripe adapter for @aymenkits/pay-core — instant destination charges with per-component application fees, escrow (manual-capture → capture → release transfer), tips, refunds, setup intents, tiered Billing subscriptions and a typed webhook dispatcher. Structural typing: takes YOUR configured stripe client (any v10+).",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@paykit/core": "1.0.0"
+    "@aymenkits/pay-core": "1.0.0"
   },
   "publishConfig": {
     "access": "public"
